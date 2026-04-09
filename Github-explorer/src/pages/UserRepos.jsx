@@ -7,13 +7,8 @@ function UserRepos() {
   const { username } = useParams();
 
   const [repos, setRepos] = useState([]);
-  const [visibleRepos, setVisibleRepos] = useState([]);
-  const [page, setPage] = useState(1);
-
-  const [sort, setSort] = useState("");
+  const [sort, setSort] = useState("stars");
   const [language, setLanguage] = useState("");
-
-  const ITEMS_PER_PAGE = 10;
 
   useEffect(() => {
     const fetchRepos = async () => {
@@ -24,42 +19,26 @@ function UserRepos() {
     fetchRepos();
   }, [username]);
 
-  useEffect(() => {
-    let filtered = [...repos];
+  // 🔥 SORT
+  const sortedRepos = [...repos].sort((a, b) => {
+    if (sort === "stars") return b.stargazers_count - a.stargazers_count;
+    if (sort === "forks") return b.forks_count - a.forks_count;
+    return 0;
+  });
 
-    // FILTER
-    if (language) {
-      filtered = filtered.filter(
-        (repo) =>
-          repo.language &&
-          repo.language.toLowerCase().includes(language.toLowerCase())
-      );
-    }
+  // 🔥 FILTER
+  const filteredRepos = sortedRepos.filter((repo) => {
+    if (!language) return true;
 
-    // SORT
-    if (sort === "stars") {
-      filtered.sort((a, b) => b.stargazers_count - a.stargazers_count);
-    } else if (sort === "forks") {
-      filtered.sort((a, b) => b.forks_count - a.forks_count);
-    }
+    return repo.language
+      ?.toLowerCase()
+      .includes(language.toLowerCase());
+  });
 
-    setVisibleRepos(filtered.slice(0, page * ITEMS_PER_PAGE));
-  }, [repos, sort, language, page]);
-
-  // INFINITE SCROLL
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 100
-      ) {
-        setPage((prev) => prev + 1);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // 🔥 UNIQUE LANGUAGES
+  const languages = [
+    ...new Set(repos.map((r) => r.language).filter(Boolean)),
+  ];
 
   return (
     <div className="container">
@@ -68,19 +47,24 @@ function UserRepos() {
       {/* CONTROLS */}
       <div className="controls">
         <select onChange={(e) => setSort(e.target.value)}>
-          <option value="">Sort</option>
-          <option value="stars">Stars</option>
-          <option value="forks">Forks</option>
+          <option value="stars">Sort by Stars</option>
+          <option value="forks">Sort by Forks</option>
         </select>
 
-        <input
-          placeholder="Filter by language..."
-          onChange={(e) => setLanguage(e.target.value)}
-        />
+        {/* 🔥 LANGUAGE DROPDOWN */}
+        <select onChange={(e) => setLanguage(e.target.value)}>
+          <option value="">All Languages</option>
+          {languages.map((lang) => (
+            <option key={lang} value={lang}>
+              {lang}
+            </option>
+          ))}
+        </select>
       </div>
 
+      {/* REPOS */}
       <div className="grid">
-        {visibleRepos.map((repo) => (
+        {filteredRepos.map((repo) => (
           <RepoCard key={repo.id} repo={repo} />
         ))}
       </div>

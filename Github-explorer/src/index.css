@@ -262,6 +262,10 @@ body.dark .repo-card:hover {
   box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15);
 }
 
+.repo-card {
+  cursor: pointer;
+}
+
 /* TITLE */
 .repo-card h3 {
   font-size: 16px;
