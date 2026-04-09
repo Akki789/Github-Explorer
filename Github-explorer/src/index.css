@@ -1,0 +1,329 @@
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================= BASE (LIGHT MODE) ================= */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+  transition: all 0.3s ease;
+}
+
+/* ================= DARK MODE ================= */
+body.dark {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* ================= CONTAINER ================= */
+.container {
+  padding: 32px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* ================= HEADER ================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+/* LOGO */
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+  color: #38bdf8;
+}
+
+/* RIGHT SIDE NAV */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* BUTTONS */
+.header-right button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+   background: #e2e8f0;
+  color: #0f172a;
+
+  transition: 0.2s;
+}
+
+.header-right button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+body.dark .header-right button {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+}
+
+body.dark .header-right button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+body.dark .nav-btn {
+  background: rgba(255,255,255,0.08);
+  color: #e2e8f0;
+}
+
+/* ================= SEARCH ================= */
+.search-input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #cbd5f5;
+  outline: none;
+  font-size: 15px;
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+
+/* FOCUS EFFECT */
+.search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+/* DARK MODE */
+body.dark .search-input {
+  background: rgba(255,255,255,0.08);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* DARK FOCUS */
+body.dark .search-input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+/* Empty State */
+.empty-state {
+  margin-top: 80px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #64748b;
+}
+
+body.dark .empty-state p {
+  color: #94a3b8;
+}
+
+
+/* ================= CONTROLS ================= */
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.controls select,
+.controls input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  background: white;
+  color: #0f172a;
+}
+
+.controls select option {
+  background: #ffffff;
+  color: #0f172a;
+}
+
+body.dark .controls select,
+body.dark .controls input {
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: white;
+}
+
+
+
+/* ================= GRID ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+/* ================= USER CARD ================= */
+.user-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.user-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: #2563eb;
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.2);
+}
+
+body.dark .user-card {
+  background: rgba(255,255,255,0.05);
+}
+
+body.dark .user-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.2);
+}
+
+.user-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  object-fit: cover;
+}
+
+.user-card p {
+  font-weight: 500;
+}
+
+/* ================= REPO CARD ================= */
+.repo-card {
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+
+  border: 1px solid transparent;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-height: 180px;
+  transition: all 0.3s ease;
+}
+
+.repo-card:hover {
+  transform: translateY(-5px);
+  border-color: #2563eb;
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+}
+
+body.dark .repo-card {
+  background: rgba(255,255,255,0.05);
+}
+
+body.dark .repo-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15);
+}
+
+/* TITLE */
+.repo-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* DESCRIPTION */
+.repo-card p {
+  font-size: 13px;
+  color: #475569;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+body.dark .repo-card p {
+  color: #94a3b8;
+}
+
+/* STATS */
+.repo-stats {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+
+/* BUTTON */
+.repo-card button {
+  align-self: flex-start;
+
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+
+  background: #2563eb;
+  color: white;
+  font-size: 12px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.repo-card button:hover {
+  background: #1d4ed8;
+}
+
+/* ================= TEXT ================= */
+h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* ================= SCROLL ================= */
+html {
+  scroll-behavior: smooth;
+}
