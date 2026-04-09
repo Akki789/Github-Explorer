@@ -14,14 +14,14 @@ function UserRepos() {
   const [sort, setSort] = useState("stars");
   const [language, setLanguage] = useState("");
 
-  // 🔥 RESET when user changes
+  // RESET when user changes
   useEffect(() => {
     setRepos([]);
     setPage(1);
     setHasMore(true);
   }, [username]);
 
-  // 🔥 FETCH REPOS
+  // FETCH REPOS
   useEffect(() => {
     const fetchRepos = async () => {
       try {
@@ -44,7 +44,7 @@ function UserRepos() {
     fetchRepos();
   }, [page, username]);
 
-  // 🔥 SCROLL LISTENER
+  //  infinite SCROLL
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -62,14 +62,14 @@ function UserRepos() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [hasMore, loading]);
 
-  // 🔥 SORT
+  // SORT
   const sortedRepos = [...repos].sort((a, b) => {
     if (sort === "stars") return b.stargazers_count - a.stargazers_count;
     if (sort === "forks") return b.forks_count - a.forks_count;
     return 0;
   });
 
-  // 🔥 FILTER
+  // FILTER
   const filteredRepos = sortedRepos.filter((repo) => {
     if (!language) return true;
 

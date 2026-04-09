@@ -9,7 +9,7 @@ function RepoCard({ repo }) {
   }, [repo.id]);
 
   const toggleBookmark = (e) => {
-    e.stopPropagation(); // 🔥 IMPORTANT (prevents card click)
+    e.stopPropagation(); // IMPORTANT (prevents card click)
 
     let saved = JSON.parse(localStorage.getItem("bookmarks")) || [];
 
@@ -23,7 +23,7 @@ function RepoCard({ repo }) {
     setBookmarked(!bookmarked);
   };
 
-  // 🔥 OPEN REPO ON CLICK
+  // OPEN REPO ON CLICK
   const openRepo = () => {
     window.open(repo.html_url, "_blank");
   };
@@ -34,7 +34,7 @@ function RepoCard({ repo }) {
 
       <p>{repo.description || "No description available"}</p>
 
-      {/* 🔥 LANGUAGE BADGE */}
+      {/* LANGUAGE BADGE */}
       {repo.language && (
         <span className="language-badge">{repo.language}</span>
       )}
