@@ -7,17 +7,60 @@ function UserRepos() {
   const { username } = useParams();
 
   const [repos, setRepos] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
+
   const [sort, setSort] = useState("stars");
   const [language, setLanguage] = useState("");
 
+  // 🔥 RESET when user changes
+  useEffect(() => {
+    setRepos([]);
+    setPage(1);
+    setHasMore(true);
+  }, [username]);
+
+  // 🔥 FETCH REPOS
   useEffect(() => {
     const fetchRepos = async () => {
-      const data = await getUserRepos(username);
-      setRepos(data);
+      try {
+        setLoading(true);
+
+        const data = await getUserRepos(username, page);
+
+        if (data.length === 0) {
+          setHasMore(false);
+        } else {
+          setRepos((prev) => [...prev, ...data]);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchRepos();
-  }, [username]);
+  }, [page, username]);
+
+  // 🔥 SCROLL LISTENER
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+          document.body.offsetHeight - 200 &&
+        hasMore &&
+        !loading
+      ) {
+        setPage((prev) => prev + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasMore, loading]);
 
   // 🔥 SORT
   const sortedRepos = [...repos].sort((a, b) => {
@@ -35,7 +78,7 @@ function UserRepos() {
       .includes(language.toLowerCase());
   });
 
-  // 🔥 UNIQUE LANGUAGES
+  //LANGUAGES filter
   const languages = [
     ...new Set(repos.map((r) => r.language).filter(Boolean)),
   ];
@@ -51,7 +94,6 @@ function UserRepos() {
           <option value="forks">Sort by Forks</option>
         </select>
 
-        {/* 🔥 LANGUAGE DROPDOWN */}
         <select onChange={(e) => setLanguage(e.target.value)}>
           <option value="">All Languages</option>
           {languages.map((lang) => (
@@ -62,12 +104,16 @@ function UserRepos() {
         </select>
       </div>
 
-      {/* REPOS */}
+      {/* REPO LIST */}
       <div className="grid">
         {filteredRepos.map((repo) => (
           <RepoCard key={repo.id} repo={repo} />
         ))}
       </div>
+
+      {/* LOADING / END */}
+      {loading && <p>Loading more...</p>}
+      {!hasMore && <p>No more repositories</p>}
     </div>
   );
 }

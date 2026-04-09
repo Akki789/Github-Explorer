@@ -6,8 +6,12 @@ export const searchUsers = async (query) => {
   return res.json();
 };
 
-export const getUserRepos = async (username) => {
-  const res = await fetch(`${BASE_URL}/users/${username}/repos`);
+export const getUserRepos = async (username, page = 1) => {
+  const res = await fetch(
+    `${BASE_URL}/users/${username}/repos?per_page=10&page=${page}`
+  );
+
   if (!res.ok) throw new Error("Failed to fetch repos");
+
   return res.json();
 };
